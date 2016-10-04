@@ -17,11 +17,12 @@ We load each field explicitely here for now.
 
     <t t-set="title" t-value="view.form_title" />
 
-    <h2>
+    <h2 class="o_website_cms_title">
       <span class="form_title" t-esc="view.form_title" />
     </h2>
 
     <form
+      class="o_website_cms"
       t-att-action="form_action or '/cms/add-page'"
       method="POST"
       t-attf-class="container-fluid mt32 page-form #{view.form_mode}-mode"
@@ -29,46 +30,56 @@ We load each field explicitely here for now.
 
       <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
-      <div class="form-group form-field mt8 field-name">
-        <label class="col-md-3 col-sm-4 control-label" for="name">Name</label>
-        <input type="text"
-          class="form-control o_website_form_input"
-          name="name"
-          t-att-value="name"
-          required="1"
-          />
+      <div class="form-group form-field field-name">
+        <div class="col-sm-3 col-md-2">
+          <label class="control-label text-right" for="name">Name</label>
+        </div>
+        <div class="col-sm-9 col-md-10">
+          <input type="text"
+            class="form-control o_website_form_input"
+            name="name"
+            t-att-value="name"
+            required="1"/>
+          </div>
       </div>
 
-      <div class="form-group form-field mt8 field-description">
-        <label class="col-md-3 col-sm-4 control-label" for="description">Description</label>
-        <textarea
-          class="form-control o_website_form_input"
-          name="description"
-          t-esc="description"></textarea>
-        <p class="help-block">
-          Description might be useful in many views, especially listing views
-          to show a brief summary of the content.<br />
-          This image might not be used in the view of the item,
-          this will depend on you website design.
-        </p>
+      <div class="form-group form-field field-description">
+        <div class="col-sm-3 col-md-2">
+          <label class="control-label" for="description">Description</label>
+        </div>
+        <div class="col-sm-9 col-md-10">
+          <textarea
+            class="form-control o_website_form_input"
+            name="description"
+            t-esc="description"></textarea>
+          <p class="help-block">
+            Description might be useful in many views, especially listing views
+            to show a brief summary of the content.<br />
+            This image might not be used in the view of the item,
+            this will depend on you website design.
+          </p>
+        </div>
       </div>
 
       <div class="form-group form-field mt8 field-image">
-        <label class="col-md-3 col-sm-4 control-label" for="image">Lead image</label>
-        <input
-            type="file"
-            capture="camera"
-            accept="image/*"
-            id="image"
-            name="image"
-            class="form-control o_website_form_input"
-            />
-        <p class="help-block">
-          This image could be used for landing pages and listing views
-          to present a content with a specific image. <br />
-          This image might not be used in the view of the item,
-          this will depend on you website design.
-        </p>
+        <div class="col-sm-3 col-md-2">
+            <label class="control-label" for="image">Lead image</label>
+        </div>
+        <div class="col-sm-9 col-md-10">
+          <input
+              type="file"
+              capture="camera"
+              accept="image/*"
+              id="image"
+              name="image"
+              class="form-control o_website_form_input"/>
+          <p class="help-block">
+            This image could be used for landing pages and listing views
+            to present a content with a specific image. <br />
+            This image might not be used in the view of the item,
+            this will depend on you website design.
+          </p>
+        </div>
         <t t-if="has_image">
           <div class="preview image-preview mt8">
             <img t-att-src="website.safe_image_url(main_object, 'image_thumb')" />
@@ -109,17 +120,21 @@ We load each field explicitely here for now.
 
 
       <div class="form-group form-field mt8 field-tag_ids">
-        <label class="col-md-2 col-sm-3 control-label" for="tags">Tags</label>
-        <!-- make sure you keep a fake `value` attribute
-        otherwise `initSelection` mechanism won't work.
-        See http://select2.github.io/select2/#initSelection -->
-        <input type="text" name="tag_ids" class="form-control js_select2" style="clear:both"
-               t-att-data-can-create="is_cms_manager and 1 or None"
-               placeholder="Tags" t-attf-data-init-value="#{tag_ids}" value="tags go here" />
+        <div class="col-sm-3 col-md-2">
+            <label class="control-label" for="tags">Tags</label>
+            <!-- make sure you keep a fake `value` attribute
+            otherwise `initSelection` mechanism won't work.
+            See http://select2.github.io/select2/#initSelection -->
+        </div>
+        <div class="col-sm-9 col-md-10">
+          <input type="text" name="tag_ids" class="form-control js_select2" style="clear:both"
+            t-att-data-can-create="is_cms_manager and 1 or None"
+            placeholder="Tags" t-attf-data-init-value="#{tag_ids}" value="tags go here" />
+        </div>
       </div>
 
-      <div class="form-group mt32">
-        <div class="pull-right">
+      <div class="form-group">
+        <div class="col-sm-offset-10 col-sm-2 col-md-offset-10 col-md-2">
           <a class="btn btn-default" t-att-href="request.httprequest.referrer">Cancel</a>
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
